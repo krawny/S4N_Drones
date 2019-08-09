@@ -6,14 +6,14 @@ import Modelo.Coordenada;
 import Modelo.DespachoDron;
 import Modelo.GestionArchivosDron;
 
-public class Main {
+public class DronesApplication {
 
 	public static void main(String[] args) {
 
 		String ruta = "./resources/in.txt";
 		int numDron = 3;
 		String mensaje;
-		Coordenada coordenada = new Coordenada(0, 0, 'N');
+		Coordenada coordenada = new Coordenada(0, 0, "Norte");
 		mensaje = controlador(ruta, numDron, coordenada);
 		System.out.println(mensaje);
 	}
@@ -25,12 +25,10 @@ public class Main {
 		rutasObtenidasArchivo = gesti.leerAchivo(ruta, numDron);
 
 		if (rutasObtenidasArchivo == null) {
-			// como controlo las excepciones para decir si fue q el archivo no estaba, o
-			// estaba vacio o no tenia la estructura valida?
 			return gesti.getMjError();
 		}
 
-		Coordenada coordenada2 = new Coordenada(0, 0, 'N');
+		Coordenada coordenada2 = new Coordenada(0, 0, "Norte");
 		DespachoDron despachoDron = new DespachoDron(rutasObtenidasArchivo, coordenada2);
 
 		if (!despachoDron.entregaPedido()) {

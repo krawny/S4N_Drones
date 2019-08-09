@@ -18,7 +18,7 @@ public class GestionArchivosDronTest {
 //	      if (!m.find()) {
 //	         System.err.println("NO tiene A");
 //	      }
-		Coordenada coordenada = new Coordenada(0, 0, 'N');
+		Coordenada coordenada = new Coordenada(0, 0, "Norte");
 		gesti = new GestionArchivosDron(coordenada);
 		String archivo = "DDAIAD";
 		

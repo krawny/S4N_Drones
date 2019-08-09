@@ -4,9 +4,9 @@ public class Coordenada {
 
 	private int x;
 	private int y;
-	private Character orientacion;
+	private String orientacion;
 
-	public Coordenada(int x, int y, Character orientacion) {
+	public Coordenada(int x, int y, String orientacion) {
 		this.x = x;
 		this.y = y;
 		this.orientacion = orientacion;
@@ -28,11 +28,11 @@ public class Coordenada {
 		this.y = y;
 	}
 
-	public Character getOrientacion() {
+	public String getOrientacion() {
 		return orientacion;
 	}
 
-	public void setOrientacion(Character orientacion) {
+	public void setOrientacion(String orientacion) {
 		this.orientacion = orientacion;
 	}
 
