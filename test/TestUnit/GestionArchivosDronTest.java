@@ -1,9 +1,11 @@
 package TestUnit;
 
+import java.io.File;
+
 import org.junit.Test;
 
-import Modelo.Coordenada;
-import Modelo.GestionArchivosDron;
+import modelo.Coordenada;
+import modelo.GestionArchivosDron;
 
 public class GestionArchivosDronTest {
 
@@ -29,6 +31,10 @@ public class GestionArchivosDronTest {
 	
 	@Test
 	public void leerAchivoTest() {
+		File archivoEntrada = new File("//jdj");
+		if(archivoEntrada.exists()) {
+			System.out.println("Existe");
+		}
 		
 	}
 }

@@ -1,9 +1,11 @@
-package Modelo;
+package modelo;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+
+import exception.ArchivosException;
 
 public class GestionArchivosDron implements GestionArchivos {
 
@@ -14,18 +16,26 @@ public class GestionArchivosDron implements GestionArchivos {
 		this.coordenada = coordenada;
 	}
 
-	@Override
-	public ArrayList<String> leerAchivo(String ruta, int capacidadDron) {
 
+	@Override
+	public ArrayList<String> leerAchivo(String ruta, int capacidadDron) throws ArchivosException{
+
+		if(ruta==null&&capacidadDron==0) {
+			throw new ArchivosException("CAmpoc nulos");
+			
+		}
+		
 		File archivoEntrada = null;
-		FileReader lector = null;
 		BufferedReader buffer = null;
 		ArrayList<String> listPedidos = null;
+		archivoEntrada = new File(ruta);
+		//;
+		if(!archivoEntrada.exists()) {
+			throw new ArchivosException("El archivo no existe, no se ha encontrado el archivo en la ruta: "+ruta);
+		}
 
-		try {
+		try (FileReader lector = new FileReader(archivoEntrada)){
 
-			archivoEntrada = new File(ruta);
-			lector = new FileReader(archivoEntrada);
 			buffer = new BufferedReader(lector);
 			String linea;
 			listPedidos = new ArrayList<String>();
@@ -44,15 +54,7 @@ public class GestionArchivosDron implements GestionArchivos {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-
-			try {
-				if (null != lector) {
-					lector.close();
-				}
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+			throw new ArchivosException("Excepción no controlada" ,e);
 		}
 
 		return listPedidos;

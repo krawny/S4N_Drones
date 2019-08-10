@@ -12,8 +12,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import Modelo.Coordenada;
-import Modelo.DespachoDron;
+import modelo.Coordenada;
+import modelo.DespachoDron;
 
 @RunWith(JUnit4.class)
 public class DespachoDronTest {

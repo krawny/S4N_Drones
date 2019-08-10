@@ -2,9 +2,10 @@ package control;
 
 import java.util.ArrayList;
 
-import Modelo.Coordenada;
-import Modelo.DespachoDron;
-import Modelo.GestionArchivosDron;
+import exception.ArchivosException;
+import modelo.Coordenada;
+import modelo.DespachoDron;
+import modelo.GestionArchivosDron;
 
 public class DronesApplication {
 
@@ -22,19 +23,31 @@ public class DronesApplication {
 
 		GestionArchivosDron gesti = new GestionArchivosDron(coordenada);
 		ArrayList<String> rutasObtenidasArchivo;
-		rutasObtenidasArchivo = gesti.leerAchivo(ruta, numDron);
+		try {
+			rutasObtenidasArchivo = gesti.leerAchivo(ruta, numDron);
+			
+			if (rutasObtenidasArchivo == null) {
+				return gesti.getMjError();
+			}
+			
+			Coordenada coordenada2 = new Coordenada(0, 0, "Norte");
+			DespachoDron despachoDron = new DespachoDron(rutasObtenidasArchivo, coordenada2);
 
-		if (rutasObtenidasArchivo == null) {
-			return gesti.getMjError();
+			if (!despachoDron.entregaPedido()) {
+				return "No se pudo entregar el pedido o generar el archivo";
+			}
+			
+		} catch (ArchivosException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}catch (Exception e) {
+			System.out.println("Se presento un error al leer el archivo"+e.getMessage());
 		}
 
-		Coordenada coordenada2 = new Coordenada(0, 0, "Norte");
-		DespachoDron despachoDron = new DespachoDron(rutasObtenidasArchivo, coordenada2);
-
-		if (!despachoDron.entregaPedido()) {
-			return "No se pudo entregar el pedido o generar el archivo";
-		}
 		return "El despacho se genero con Exito";
+
+		
 	}
 
 }

@@ -1,4 +1,4 @@
-package Modelo;
+package modelo;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -87,8 +87,9 @@ public class DespachoDron implements Despacho {
 
 			printW.close();
 			bufferedW.close();
-		} catch (IOException e) {
+		} catch (Exception e) {
 
+			return false;
 		}
 		;
 
