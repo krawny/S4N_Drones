@@ -10,53 +10,45 @@ import exception.ArchivosException;
 public class GestionArchivosDron implements GestionArchivos {
 
 	private Coordenada coordenada;
-	private String mjError;
 
 	public GestionArchivosDron(Coordenada coordenada) {
 		this.coordenada = coordenada;
 	}
 
-
 	@Override
-	public ArrayList<String> leerAchivo(String ruta, int capacidadDron) throws ArchivosException{
+	public ArrayList<String> leerAchivo(String ruta, int capacidadDron) throws ArchivosException {
 
-		if(ruta==null&&capacidadDron==0) {
-			throw new ArchivosException("CAmpoc nulos");
-			
+		if (ruta == null || capacidadDron <= 0) {
+			throw new ArchivosException(
+					"No se proporcionó información de la ruta del archivo o de la capacidad del dron");
 		}
-		
+
 		File archivoEntrada = null;
 		BufferedReader buffer = null;
 		ArrayList<String> listPedidos = null;
 		archivoEntrada = new File(ruta);
-		//;
-		if(!archivoEntrada.exists()) {
-			throw new ArchivosException("El archivo no existe, no se ha encontrado el archivo en la ruta: "+ruta);
+		if (!archivoEntrada.exists()) {
+			throw new ArchivosException("No se ha encontrado el archivo en la ruta: " + ruta);
 		}
 
-		try (FileReader lector = new FileReader(archivoEntrada)){
-
+		try (FileReader lector = new FileReader(archivoEntrada)) {
 			buffer = new BufferedReader(lector);
 			String linea;
-			listPedidos = new ArrayList<String>();
+			listPedidos = new ArrayList<>();
 
 			for (int i = 0; (linea = buffer.readLine()) != null; i++) {
-
 				if (i >= capacidadDron) {
-					mjError = "Archivo Invalido: tiene más pedidos de los soportados";
-					return null;
+					throw new ArchivosException("El archivo tiene más pedidos de los soportados por el dron");
 				}
 				if (!validarEstructura(linea)) {
-					return null;
+					throw new ArchivosException(
+							"Las rutas no tienen una estructura valida o se encuentran fuera del rango de covertura");
 				}
 				listPedidos.add(linea);
 			}
-
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new ArchivosException("Excepción no controlada" ,e);
+			throw new ArchivosException("Se presento el siguiente error, " + e, e);
 		}
-
 		return listPedidos;
 	}
 
@@ -65,18 +57,13 @@ public class GestionArchivosDron implements GestionArchivos {
 
 		for (int i = 0; i < linea.length(); i++) {
 			if (!(linea.charAt(i) == 'A' || linea.charAt(i) == 'D' || linea.charAt(i) == 'I')) {
-				mjError = "Archivo Invalido: Caracteres invalidos";
 				return false;
 			}
-
 			simularMov(linea.charAt(i));
-
 			if (Math.abs(coordenada.getX()) > 10 || Math.abs(coordenada.getY()) > 10) {
-				mjError = "Archivo Invalido: ruta fuera del rango";
 				return false;
 			}
 		}
-
 		return true;
 	}
 
@@ -107,9 +94,4 @@ public class GestionArchivosDron implements GestionArchivos {
 		}
 
 	}
-
-	public String getMjError() {
-		return mjError;
-	}
-
 }

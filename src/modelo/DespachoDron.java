@@ -3,9 +3,10 @@ package modelo;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import exception.ArchivosException;
 
 public class DespachoDron implements Despacho {
 
@@ -21,11 +22,11 @@ public class DespachoDron implements Despacho {
 
 	/**
 	 * Este método se encarga de mover el dron de acuerdo con las rutas de entrada,
-	 * al finalizar el total de entregas genera un archivo con las coordenadas del 
+	 * al finalizar el total de entregas genera un archivo con las coordenadas del
 	 * dron en el momento de cada entrega.
-	 * */
+	 */
 	@Override
-	public boolean entregaPedido() {
+	public boolean entregaPedido() throws ArchivosException {
 		for (String ruta : rutas) {
 			for (int i = 0; i < ruta.length(); i++) {
 				moverDron(ruta.charAt(i));
@@ -38,7 +39,7 @@ public class DespachoDron implements Despacho {
 	/**
 	 * Genera los movimientos del dron de acuerdo con las indicaciones de las rutas
 	 * y a las políticas de movimiento definidas
-	 * **/
+	 **/
 	public void moverDron(Character mov) {
 
 		if (mov == 'A') {
@@ -68,16 +69,16 @@ public class DespachoDron implements Despacho {
 	}
 
 	/**
-	 * Genera el reporte de entrega en un archivo txt con las coordenadas de
-	 * la ubicación del dron en el momento de la entrega
+	 * Genera el reporte de entrega en un archivo txt con las coordenadas de la
+	 * ubicación del dron en el momento de la entrega
 	 **/
 	public boolean crearReportEntrega() {
 
 		File reportEntrega;
 		reportEntrega = new File("./resources/out.txt");
 
-		try {
-			FileWriter fileWiter = new FileWriter(reportEntrega);
+		try (FileWriter fileWiter = new FileWriter(reportEntrega)) {
+
 			BufferedWriter bufferedW = new BufferedWriter(fileWiter);
 			PrintWriter printW = new PrintWriter(bufferedW);
 
@@ -88,11 +89,8 @@ public class DespachoDron implements Despacho {
 			printW.close();
 			bufferedW.close();
 		} catch (Exception e) {
-
 			return false;
 		}
-		;
-
 		return true;
 	}
 
