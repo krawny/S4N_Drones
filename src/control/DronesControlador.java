@@ -11,26 +11,22 @@ public class DronesControlador {
 	
 	private String ruta;
 	private int numDron;
-	private Coordenada coordenada;
 	
-	public DronesControlador(String ruta, int numDron, Coordenada coordenada) {
+	public DronesControlador(String ruta, int numDron) {
 		this.ruta = ruta;
 		this.numDron = numDron;
-		this.coordenada = coordenada;
 	}
-
 
 	public String iniciarDespachos() {
 
-		GestionArchivosDron gesti = new GestionArchivosDron(coordenada);
+		GestionArchivosDron gesti = new GestionArchivosDron();
 		ArrayList<String> rutasObtenidasArchivo;
 		try {
 			rutasObtenidasArchivo = gesti.leerAchivo(ruta, numDron);
 			if (rutasObtenidasArchivo == null) {
 				return "Se presento un error ";
 			}
-			Coordenada coordenada2 = new Coordenada(0, 0, "Norte");
-			DespachoDron despachoDron = new DespachoDron(rutasObtenidasArchivo, coordenada2);
+			DespachoDron despachoDron = new DespachoDron(rutasObtenidasArchivo);
 
 			if (!despachoDron.entregaPedido()) {
 				return "Se presento un error al generar el archivo";

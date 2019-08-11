@@ -22,24 +22,21 @@ public class GestionArchivosDronTest {
 
 	@Test
 	public void validarEstructuraTest() {
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		gesti = new GestionArchivosDron(coordenada);
+		gesti = new GestionArchivosDron();
 		String ruta = "DDAIAD";
 		assertTrue(gesti.validarEstructura(ruta));
 	}
 
 	@Test
 	public void validarEstructuraErrorTest() {
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		gesti = new GestionArchivosDron(coordenada);
+		gesti = new GestionArchivosDron();
 		String ruta = "SDDAIAD";
 		assertTrue(!gesti.validarEstructura(ruta));
 	}
 
 	@Test
 	public void leerAchivoRutaInvalidaTest() {
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		gesti = new GestionArchivosDron(coordenada);
+		gesti = new GestionArchivosDron();
 		try {
 			assertTrue(gesti.leerAchivo("//rutaErronea", 0) == null);
 		} catch (ArchivosException e) {
@@ -49,8 +46,7 @@ public class GestionArchivosDronTest {
 
 	@Test
 	public void leerAchivoSinArchivoTest() {
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		gesti = new GestionArchivosDron(coordenada);
+		gesti = new GestionArchivosDron();
 		try {
 			assertTrue(gesti.leerAchivo("./resources/entrada.txt", 3) == null);
 		} catch (ArchivosException e) {
@@ -64,16 +60,14 @@ public class GestionArchivosDronTest {
 		String ruta = "./resources/in.txt";
 		int numDron = 3;
 		String mensaje;
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		DronesControlador controlador = new DronesControlador(ruta, numDron, coordenada);
+		DronesControlador controlador = new DronesControlador(ruta, numDron);
 		mensaje = controlador.iniciarDespachos();
 		assertTrue(mensaje.equals("El despacho se genero con Exito"));
 	}
 
 	@Test
 	public void leerAchivoDatosNullTest() {
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		gesti = new GestionArchivosDron(coordenada);
+		gesti = new GestionArchivosDron();
 		try {
 			assertTrue(gesti.leerAchivo(null, 0) == null);
 		} catch (ArchivosException e) {
@@ -83,8 +77,7 @@ public class GestionArchivosDronTest {
 
 	@Test
 	public void leerAchivoCapacidadInvalidaTest() {
-		Coordenada coordenada = new Coordenada(0, 0, ORIENTACION);
-		gesti = new GestionArchivosDron(coordenada);
+		gesti = new GestionArchivosDron();
 		try {
 			assertTrue(gesti.leerAchivo("Hl", -1) == null);
 		} catch (ArchivosException e) {

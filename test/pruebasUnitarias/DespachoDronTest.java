@@ -26,8 +26,7 @@ public class DespachoDronTest {
 		rutas.add("DDAIAI");
 		rutas.add("AAIADAD");
 		ArrayList<String> coordenadas = new ArrayList<String>();
-		Coordenada coordenada = new Coordenada(0, 0, "Norte");
-		DespachoDron despachoDron = new DespachoDron(rutas, coordenada);
+		DespachoDron despachoDron = new DespachoDron(rutas);
 		despachoDron.setCoordenadas(coordenadas);
 
 		assertTrue(despachoDron.entregaPedido());
@@ -45,8 +44,7 @@ public class DespachoDronTest {
 		rutas.add("DDAIAI");
 		rutas.add("AAIADAD");
 		ArrayList<String> coordenadas = new ArrayList<String>();
-		Coordenada coordenada = new Coordenada(0, 0, "Norte");
-		DespachoDron despachoDron = new DespachoDron(rutas, coordenada);
+		DespachoDron despachoDron = new DespachoDron(rutas);
 		coordenadas.add("Hola");
 		coordenadas.add("Mundo");
 		despachoDron.setCoordenadas(coordenadas);

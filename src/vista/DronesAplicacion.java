@@ -10,8 +10,7 @@ public class DronesAplicacion {
 		String ruta = "./resources/in.txt";
 		int numDron = 3;
 		String mensaje;
-		Coordenada coordenada = new Coordenada(0, 0, "Norte");
-		DronesControlador controlador = new DronesControlador(ruta, numDron, coordenada);
+		DronesControlador controlador = new DronesControlador(ruta, numDron);
 		mensaje = controlador.iniciarDespachos();
 		System.out.println(mensaje);
 	}

@@ -13,10 +13,12 @@ public class DespachoDron implements Despacho {
 	private ArrayList<String> rutas;
 	private ArrayList<String> coordenadas;
 	private Coordenada coordenada;
+	private final String norte;
 
-	public DespachoDron(ArrayList<String> rutas, Coordenada coordenada) {
+	public DespachoDron(ArrayList<String> rutas) {
 		this.rutas = rutas;
-		this.setCoordenada(coordenada);
+		this.norte = "Norte";
+		this.coordenada = new Coordenada(0, 0, norte);
 		this.coordenadas = new ArrayList<String>();
 	}
 
@@ -44,7 +46,7 @@ public class DespachoDron implements Despacho {
 
 		if (mov == 'A') {
 
-			if (coordenada.getOrientacion().equals("Norte")) {
+			if (coordenada.getOrientacion().equals(norte)) {
 				coordenada.setY(coordenada.getY() + 1);
 			} else if (coordenada.getOrientacion().equals("Sur")) {
 				coordenada.setY(coordenada.getY() - 1);
@@ -53,15 +55,15 @@ public class DespachoDron implements Despacho {
 			} else {
 				coordenada.setX(coordenada.getX() - 1);
 			}
-		} else if ((mov == 'I' && coordenada.getOrientacion().equals("Norte"))
+		} else if ((mov == 'I' && coordenada.getOrientacion().equals(norte))
 				|| (mov == 'I' && coordenada.getOrientacion().equals("Sur"))) {
 			coordenada.setOrientacion("Occidente");
-		} else if ((mov == 'D' && coordenada.getOrientacion().equals("Norte"))
+		} else if ((mov == 'D' && coordenada.getOrientacion().equals(norte))
 				|| (mov == 'D' && coordenada.getOrientacion().equals("Sur"))) {
 			coordenada.setOrientacion("Oriente");
 		} else if ((mov == 'I' && coordenada.getOrientacion().equals("Oriente"))
 				|| (mov == 'D' && coordenada.getOrientacion().equals("Occidente"))) {
-			coordenada.setOrientacion("Norte");
+			coordenada.setOrientacion(norte);
 		} else {
 			coordenada.setOrientacion("Sur");
 		}

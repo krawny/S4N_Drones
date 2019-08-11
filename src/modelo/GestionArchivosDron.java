@@ -10,9 +10,13 @@ import exception.ArchivosException;
 public class GestionArchivosDron implements GestionArchivos {
 
 	private Coordenada coordenada;
+	private static final String NORTE = "Norte";
+	private static final String SUR = "Sur";
+	private static final String ORIENTE = "Oriente";
+	private static final String OCCIDENTE = "Occidente";
 
-	public GestionArchivosDron(Coordenada coordenada) {
-		this.coordenada = coordenada;
+	public GestionArchivosDron() {
+		this.coordenada = new Coordenada(0, 0, NORTE);
 	}
 
 	@Override
@@ -69,29 +73,48 @@ public class GestionArchivosDron implements GestionArchivos {
 
 	public void simularMov(Character mov) {
 
-		if (mov == 'A') {
-
-			if (coordenada.getOrientacion().equals("Norte")) {
+		switch (coordenada.getOrientacion()) {
+		case NORTE:
+			if (mov == 'A') {
 				coordenada.setY(coordenada.getY() + 1);
-			} else if (coordenada.getOrientacion().equals("Sur")) {
-				coordenada.setY(coordenada.getY() - 1);
-			} else if (coordenada.getOrientacion().equals("Oriente")) {
-				coordenada.setX(coordenada.getX() + 1);
+			} else if (mov == 'I') {
+				coordenada.setOrientacion(OCCIDENTE);
 			} else {
-				coordenada.setX(coordenada.getX() - 1);
+				coordenada.setOrientacion(ORIENTE);
 			}
-		} else if ((mov == 'I' && coordenada.getOrientacion().equals("Norte"))
-				|| (mov == 'I' && coordenada.getOrientacion().equals("Sur"))) {
-			coordenada.setOrientacion("Occidente");
-		} else if ((mov == 'D' && coordenada.getOrientacion().equals("Norte"))
-				|| (mov == 'D' && coordenada.getOrientacion().equals("Sur"))) {
-			coordenada.setOrientacion("Oriente");
-		} else if ((mov == 'I' && coordenada.getOrientacion().equals("Oriente"))
-				|| (mov == 'D' && coordenada.getOrientacion().equals("Occidente"))) {
-			coordenada.setOrientacion("Norte");
-		} else {
-			coordenada.setOrientacion("Sur");
+			break;
+		case SUR:
+			if (mov == 'A') {
+				coordenada.setY(coordenada.getY() - 1);
+			} else if (mov == 'I') {
+				coordenada.setOrientacion(OCCIDENTE);
+			} else {
+				coordenada.setOrientacion(ORIENTE);
+			}
+			break;
+		case ORIENTE:
+			if (mov == 'A') {
+				coordenada.setY(coordenada.getX() + 1);
+			} else if (mov == 'I') {
+				coordenada.setOrientacion(NORTE);
+			} else {
+				coordenada.setOrientacion(SUR);
+			}
+			break;
+		case OCCIDENTE:
+			if (mov == 'A') {
+				coordenada.setY(coordenada.getX() + -1);
+			} else if (mov == 'I') {
+				coordenada.setOrientacion(SUR);
+			} else {
+				coordenada.setOrientacion(NORTE);
+			}
+			break;
+
+		default:
+			break;
 		}
 
 	}
+
 }
